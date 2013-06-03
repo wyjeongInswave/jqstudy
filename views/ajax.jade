@@ -6,7 +6,7 @@ block content
     Ajax는 브라우저의 리프레시 없이 서버에서 데이터를 가져올 수 있는 기능입니다.
   h2 Shorthand Methods
   h3 jQuery.get()
-  xmp.run.
+  pre.run: code.
     $.get('/ajax_get_text', {
       name: "woong"
     }, function(data) {
@@ -15,14 +15,14 @@ block content
   p.
     HTTP GET request를 이용하여 서버에서 데이터를 로드합니다.<br/>
     jQuery.get()은 jQuery.ajax의 단축형으로, 아래와 같이 써도 동일합니다.
-  xmp.
+  pre: code.
     $.ajax({
       url: url,
       data: data,
       success: success,
       dataType: dataType
     });
-  xmp.run.
+  pre.run: code.
     $.ajax({
       url: '/ajax_get_text',
       data: {name: "woong"},

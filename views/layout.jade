@@ -3,8 +3,12 @@ html
   head
     title= title
     link(rel='stylesheet', href='/stylesheets/style.css')
+    link(rel='stylesheet', href='/highlight.js/styles/monokai.css')
   body
     #container
       block content
     script(src='/javascripts/jquery-1.10.0.min.js')
     script(src='/javascripts/jqstudy.js')
+    script(src='/highlight.js/highlight.pack.js')
+    script.
+      hljs.initHighlightingOnLoad();

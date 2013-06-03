@@ -7,21 +7,8 @@ body {
   width: 600px;
   margin: 0 auto;
 }
-xmp {
-  background: #ccc;
-  padding: 10px;
-}
-.source {
+pre {
   position: relative;
-  border: 1px solid #000;
-  background: #ddd;
-  padding: 0;
-}
-xmp.run {
-  background: #000;
-  color: #fff;
-  margin: 0;
-  padding: 10px;
 }
 input.run {
   position: absolute;
