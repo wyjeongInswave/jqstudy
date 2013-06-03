@@ -1,0 +1,40 @@
+extends layout
+
+block content
+  h1 Category: Event 
+  h2 Event Object
+  h3 event.currentTarget : The current DOM element within the event bubbling phase.
+  p.
+    아래의 '실행하기' 버튼을 누른 후 이 paragraph를 눌러보세요.
+  xmp.run.
+    $("p").click(function(event) {
+      alert(event.currentTarget === this);
+    });
+  br
+  h3.
+    event.data : An optional object of data passed to an event method when the current executing handler is bound.
+  p.
+    아래의 '실행하기' 버튼을 누른 후 이 버튼들을 눌러보세요. 
+  button 0
+  button 1
+  button 2
+  button 3
+  button 4
+    
+  div#log
+ 
+  xmp.run.
+    var logDiv = $("#log");
+ 
+    /* Note: This code is for demonstration purposes only. */
+    for (var i = 0; i < 5; i++) {
+      $("button").eq(i).on("click", {value: i}, function(event) {
+        var msgs = [
+        "button = " + $(this).index(),
+        "event.data.value = " + event.data.value,
+        "i = " + i
+        ];
+      logDiv.append( msgs.join(", ") + "<br>" );
+      });
+    }
+    br
