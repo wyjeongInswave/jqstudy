@@ -1,11 +1,24 @@
 extends layout
 
+block css
+  style(type='text/css').
+    .red { color:red }
+
 block content
   h1 Category: Ajax
   p.
     Ajax는 브라우저의 리프레시 없이 서버에서 데이터를 가져올 수 있는 기능입니다.
   h2 Shorthand Methods
+  h3 .load()
+  p.
+    지정된 파일을 읽어서 매치된 엘리먼트의 내용으로 넣습니다.
+  pre.run: code.
+    $("#result").load('/javascripts/ajax_sample.js');
+  pre#result(style='height:100px;background:#ddd').
+    실행시 이곳에 '/javascripts/ajax_sample.js'의 내용이 보여집니다.
   h3 jQuery.get()
+  p.
+    HTTP GET request를 이용하여 서버에서 데이터를 로드합니다.<br/>
   pre.run: code.
     $.get('/ajax_get_text', {
       name: "woong"
@@ -13,22 +26,31 @@ block content
       alert(data);
     });
   p.
-    HTTP GET request를 이용하여 서버에서 데이터를 로드합니다.<br/>
     jQuery.get()은 jQuery.ajax의 단축형으로, 아래와 같이 써도 동일합니다.
-  pre: code.
-    $.ajax({
-      url: url,
-      data: data,
-      success: success,
-      dataType: dataType
-    });
   pre.run: code.
     $.ajax({
+      type: "GET",
       url: '/ajax_get_text',
       data: {name: "woong"},
       success: function(data) {
         alert(data);
       }
     });
+  h3 jQuery.getJSON()
   p.
-    git push test
+    jQuery.get()과 동일하지만 반환된 값을 JSON 형식으로 변환해줍니다.
+  pre.run: code.
+    $.get('/ajax_get_json', {
+      name: "woong"
+    }, function(data) {
+      alert(JSON.stringify(data));
+    });
+  h3 jQeury.getScript()
+  p.
+    javascript 파일을 서버에서 읽어와서 실행합니다.
+  pre.run: code.
+    $.getScript('/javascripts/ajax_sample.js', function(data) {
+      // 먼저 스크립트가 실행되고,
+      // 그 이후에 스크립트의 내용이 보여집니다.
+      alert(data);
+    });  
