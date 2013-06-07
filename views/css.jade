@@ -1,6 +1,114 @@
 extends layout
 
+block header
+  style(type='text/css').
+    /****** common style *******/
+    h2 {margin:40px 0 15px 0;}
+    .ac {text-align:center;}    
+    .p01 {margin:0; color:#666; line-height:1.5; font-size:12px;}
+    .resultBox {padding:15px 20px; background:#ddd}
+    
+    .off, .on {padding:4px; border-radius:5px;}
+    .off {color:#444; background-color:#aaa;}
+    .on {background:#0769AD; color:#fff;}
+
+    .box01{margin:10px auto 10px; width:40px; padding:10px; font-size:18px; font-weight:bold; background:#FFC300; border:5px solid #FF8200; border-radius:5px;}
 block content
-  h1= Category: CSS
-  p CSS를 조작하는 메소드를 알아봅니다.
+  h1 Category: CSS
+  p.
+    CSS를 조작하는 메소드를 알아봅니다.
+    
   h2 .css()
+  p.p01 .css()는 CSS의 property를 조작하는 메소드입니다.
+    br
+    | property 값을 get 할땐 property를 낙타표기법으로 표기하며, array 형태로도 가능합니다.
+    br
+    | 반면 property를 set 할 때는 css를 정의하는 것과 같이 모두 소문자에 word는 -로 구분,
+    br
+    | object로도 가능합니다.
+    br
+    | object.style.propertyName과 같은 작동으로
+    br
+    | 태그 요소에 인라인 형태로 CSS를 삽입하여 우선순위가 제일 높습니다.
+  pre.run: code.
+    // 여기는 이상하게 주석을 달아야 highlight가 되넹
+    alert( $('#getProperty').css('backgroundColor') );
+  div.resultBox
+    span#getProperty.off get property target
+  pre.run: code.
+    // 여기는 이상하게 주석을 달아야 highlight가 되넹
+    $('#setProperty').css({
+        'background-color' : 'green',
+        'color' : '#fff'
+    });
+  div.resultBox
+    span#setProperty.off set property target
+  
+  h2 addClass(), removeClass(), hasClass(), toggleClass()
+  p.p01 태그 요소의 class attribute를 체크 및 수정합니다.
+    br
+    | toggleClass()는 하나의 인자를 줄 경우 인자에 해당하는 클래스를 넣었다 뺐다 동작을 하고
+    br
+    | 두개의 인자일 경우 첫번째에서 두번째 인자로 차례로 switch 합니다.
+  pre.run: code.
+    if ( $('#editClass').hasClass('off') ){
+        $('#editClass').removeClass('off').addClass('on');
+    } else {
+        $('#editClass').removeClass('on').addClass('off');
+    }
+  div.resultBox
+    span#editClass.off hasClss() &amp removeClass() &amp addClass()
+  pre.run: code.
+    // 여기는 이상하게 주석을 달아야 highlight가 되넹
+    $('#toggleClass').toggleClass('on','off');
+  div.resultBox
+    span#toggleClass.off toggleClass()
+    
+  h2 width(), height()
+  p.p01 태그 요소의 width값과 height 값을 get 및 set 합니다.
+    br
+    | 이 메소드들은 해당 요소의 margin, border, padding을 제외한 순수한 width, height를 다룹니다.
+    br
+    br
+    | 이외의 innerWidth(), innerHeight()는 padding, border을 포함한 값을,
+    br
+    |  innerWidth(), innerHeight()는 inner~()과 마찬가지로 padding, border을 포함한 값을 다루는 대신,
+    br
+    |  ture 인자를 주게 되면 margin까지 더한 값을 다룹니다.
+    br
+    br
+    | 참고로, UI 작업에서의 width와 height는
+    br
+    | css로 들어가있는 width, height의 값(없을 경우 내용물에 따른 순수 부피)과
+    br
+    | padding을 더한 값이 맞습니다.    
+  pre.run: code.
+    // 여기는 이상하게 주석을 달아야 highlight가 되넹
+    alert( "before Width : "+$('#targetBox01').width()
+        +"    before Height : "+$('#targetBox01').height() );
+        
+    $('#targetBox01').width('60');
+    $('#targetBox01').css('font-size','25px');
+    
+    alert( "after Width : "+$('#targetBox01').width()
+        +"    after Height : "+$('#targetBox01').height() );
+  div#targetBox01.box01.ac ^   ^
+    br
+    | ____
+
+  h2 position()
+  p.p01 absolute의 상대적 위치를 갖게 해주는 relative인 부모로 부터의
+  br
+  | 해당 요소의 position top, right, bottom, left를 구할 수 있습니다.
+  pre.run: code.
+    // 여기는 이상하게 주석을 달아야 highlight가 되넹
+    alert( "position top : "+ $('#here').position().top        
+        +"  position left : "+ $('#here').position().left );
+  p.ac(style='padding:10px; position:relative;')
+    span#here.on(style='margin-left: 140px; position:relative;') Here. 
+    
+  h2 .scrollTop(), scrollLeft()
+  p.p01 해당 요소를 top 혹은 left 방향으로 인자값 만큼 스크롤해 줍니다.
+  pre.run: code.
+    // IE를 위해 html 요소도 함께 지정
+    $('body, html').animate({scrollTop:0}, 'slow');
