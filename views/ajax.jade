@@ -18,7 +18,7 @@ block content
     실행시 이곳에 '/javascripts/ajax_sample.js'의 내용이 보여집니다.
   h3 jQuery.get()
   p.
-    HTTP GET request를 이용하여 서버에서 데이터를 로드합니다.<br/>
+    HTTP GET request를 이용하여 서버에서 데이터를 로드합니다.
   pre.run: code.
     $.get('/ajax_get_text', {
       name: "woong"
@@ -53,4 +53,89 @@ block content
       // 먼저 스크립트가 실행되고,
       // 그 이후에 스크립트의 내용이 보여집니다.
       alert(data);
-    });  
+    });
+  h3 jQeury.post()
+  p.
+    HTTP GET request를 이용하여 서버에서 데이터를 로드합니다.
+  pre.run: code.
+    $.post('/ajax_post_json', {
+      name: "woong"
+    }, function(data) {
+      alert(JSON.stringify(data));
+    });
+  p.
+    jQuery.post()은 jQuery.ajax의 단축형으로, 아래와 같이 써도 동일합니다.
+  pre.run: code.
+    $.ajax({
+      type: "POST",
+      url: '/ajax_post_json',
+      data: {name: "woong"},
+      success: function(data) {
+        alert(JSON.stringify(data));
+      }
+    });
+  h2 Low-Level Interface
+  h3 jQuery.ajax()
+  p.
+    asynchronous HTTP (Ajax) 리퀘스트를 수행합니다.<br />
+    jQuery.ajax( url [, settings ] )의 형식이나<br />
+    jQuery.ajax( [settings ] )의 형식으로 사용할 수 있습니다.<br />
+    settings는 Ajax 리퀘스트의 설정으로 쓰일 옵션 값을 담습니다.<br />
+    모든 옵션은 optional이며, 기본값은  $.ajaxSetup()를 이용해 설정할 수 있습니다.
+    settings에 올 수 있는 옵션은 다음과 같습니다.
+  ul
+    li accepts : request header에 담길 Accept 값(json 형태)
+    li async : request를 동기(sync)/비동기(async)로 보낼지 여부
+    li beforeSend : request를 보내기 전에 호출되는 callback. jqXHR을 수정하는데 사용함
+    li cache : false로 설정하면 브라우저에서 request를 cache 하는 것을 막음
+    li complete : request가 종료되었을 때 발생하는 callback
+    li contents : jquery가가 response를 파싱할 때 컨텐츠를 판별하는 기준이 되는 정보(json 형태)
+    li contentType : 서버에 보낼 데이터의 타입
+    li context : Ajax와 관련된 모든 callback에서 쓰일 context(this로 바인딩 될 객체)
+    li converters : response의 값을 파싱할 때 쓰일 컨버터 함수를 담은 object
+    li crossDomain : crossDomain request를 보낼지 여부
+    li data : 서버로 보낼 데이터를 담은 object(json 형태)
+    li dataFilter : raw response data를 처리할 function
+    li dataType : 서버로 부터 받을 데이터의 타입
+    li error : request가 실패할 경우 실행될 function
+    li global : global Ajax event handler를 실행 시킬지 여부(ajaxStart, ajaxStop 등)
+    li headers : request header에 붙여질 추가 정보를 담은 object
+    li ifModified : Last-Modified 값을 참조하여 마지막 request 이후 바뀐 경우에만 request가 성공되게 한다
+    li isLocal : filesystem과 같은 local 환경으로 인식하게 하는 플래그
+    li jsonp : jsonp request의 callback function을 override 할 function 이름
+    li jsonpCallback : jsonp request에서 사용될 callback function의 이름
+    li mimeType : XHR mime 타입
+    li password : HTTP access authentication request에 사용될 password
+    li processData : data를 query string으로 바꿀지 여부
+    li scriptCharset : request로 가져온 script를 실행하기 위한 script tag에 들어갈 캐릭터셋
+    li statusCode : request의 결과로 나온 HTTP status code에 따라 실행될 callback을 담은 json
+    li success : request가 성공할 경우 불리워질 callback
+    li timeout : request의 timeout 시간으로 쓰일 숫자 값
+    li traditional : traditional param serialization을 쓸지 여부
+    li type : "POST", "GET" 등 request type
+    li url : request를 보낼 url
+    li username : HTTP access authentication request에 사용될 username
+    li xhr : XMLHttpRequest를 생성하고 불리워질 callback
+    li xhrFields : xhr object에 적용될 옵션값(json 형태)
+  h3 jQuery.ajaxSetup()
+  p.
+    Ajax request에 사용될 기본 옵션 값을 설정합니다.
+  pre: code.
+    // 모든 $.ajax()의 url 기본값을 'ping.php'로 설정한다.
+    $.ajaxSetup({
+      url: 'ping.php'
+    });
+  h3 jQuery.ajaxPrefilter()
+  p.
+    jQuery.ajax()가 실행되기 전에 options 값을 수정할 수 있는 핸들러입니다.
+  pre: code.
+    // abortOnRetry=true인 경우, url을 저장하여 중복 request를 방지하는 예제
+    var currentRequests = {};
+    $.ajaxPrefilter(function( options, originalOptions, jqXHR ) {
+      if ( options.abortOnRetry ) {
+        if ( currentRequests[ options.url ] ) {
+          currentRequests[ options.url ].abort();
+        }
+        currentRequests[ options.url ] = jqXHR;
+      }
+    });

@@ -31,6 +31,7 @@ if ('development' == app.get('env')) {
 app.get('/', routes.index);
 app.get("/ajax_get_text", routes.ajax_get_text);
 app.get("/ajax_get_json", routes.ajax_get_json);
+app.post("/ajax_post_json", routes.ajax_post_json);
 app.get('/:id', routes.jqstudy);
 app.get('/users', user.list);
 
